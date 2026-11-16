@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WalkSync - Find Your Walking Partner</title>
+    <meta name="description" content="WalkSync connects you with friendly walking partners in your locality. Search by area, time and preference, then send a walk request.">
+    <meta name="theme-color" content="#168653">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23168653'/%3E%3Cpath d='M13 35c-5-7 1-12 8-11s13 2 14-6' fill='none' stroke='%23d9ffeb' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='35' cy='15' r='6' fill='%23fff'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Icon sprite -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5 7-5s7 1.5 7 5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c3 0 5 1.2 5 4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.8-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6.2-8 11-8 11z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h6a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h6"/></symbol>
+    <symbol id="i-pace" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="siteHeader">
+    <nav class="navbar" aria-label="Main">
+        <a class="logo" href="#home" aria-label="WalkSync home">
+            <span class="logo-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" focusable="false">
+                    <path class="logo-route" d="M13 35c-5-7 1-12 8-11s13 2 14-6" />
+                    <circle class="logo-dot" cx="13" cy="35" r="3" />
+                    <path class="logo-pin" d="M35 7c-5 0-8 3.7-8 8 0 5.4 8 13 8 13s8-7.6 8-13c0-4.3-3-8-8-8z" />
+                    <circle class="logo-pin-hole" cx="35" cy="15" r="2.5" />
+                </svg>
+            </span>
+            <span class="logo-word"><span class="logo-walk">Walk</span><span class="logo-sync">Sync</span></span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#find">Find Partner</a></li>
+            <li><a href="#about">How it works</a></li>
+            <li><a href="#safety">Safety</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="auth-area" id="authArea"></div>
+            <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+                <svg class="i"><use href="#i-menu"/></svg>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main id="main">
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <span class="eyebrow"><svg class="i"><use href="#i-route"/></svg> Walk &bull; Connect &bull; Stay healthy</span>
+                <h1>Find your perfect <span>walking partner</span></h1>
+                <p class="lead">
+                    WalkSync helps you meet friendly walkers around your locality. Pick your area and preferred time,
+                    send a request, and turn your daily walk into something to look forward to.
+                </p>
+                <div class="hero-cta">
+                    <a href="#find" class="btn btn-primary btn-lg">Find a partner <svg class="i"><use href="#i-arrow"/></svg></a>
+                    <button type="button" class="btn btn-ghost btn-lg" id="heroListBtn">List yourself as a partner</button>
+                </div>
+                <dl class="stats" aria-label="WalkSync community">
+                    <div><dt>Active walkers</dt><dd id="statWalkers">-</dd></div>
+                    <div><dt>Localities</dt><dd id="statLocalities">-</dd></div>
+                    <div><dt>Connections made</dt><dd id="statConnections">-</dd></div>
+                </dl>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="map-card">
+                    <svg viewBox="0 0 360 300" class="map-svg" focusable="false">
+                        <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#d3ebdd" stroke-width="1"/></pattern></defs>
+                        <rect width="360" height="300" fill="#f1faf5"/>
+                        <rect width="360" height="300" fill="url(#grid)"/>
+                        <path d="M-10 230C60 200 90 250 150 220S250 120 370 150" fill="none" stroke="#bfe3cf" stroke-width="22" stroke-linecap="round" opacity=".6"/>
+                        <path class="map-route" d="M50 235C90 185 130 245 180 190S265 120 300 80" fill="none" stroke="#168653" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12"/>
+                        <circle cx="50" cy="235" r="10" fill="#fff" stroke="#168653" stroke-width="5"/>
+                        <circle cx="300" cy="80" r="10" fill="#168653"/>
+                        <circle cx="300" cy="80" r="22" fill="#168653" opacity=".15"/>
+                    </svg>
+                    <div class="float-chip chip-a"><span class="avatar av-f">AS</span><div><strong>Ananya</strong><small>Rajpur Road &middot; Evening</small></div></div>
+                    <div class="float-chip chip-b"><span class="avatar av-m">RV</span><div><strong>Rahul</strong><small>Clock Tower &middot; Morning</small></div></div>
+                    <div class="float-chip chip-c"><svg class="i"><use href="#i-check"/></svg> Request accepted</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="search-section" id="find">
+        <div class="container">
+            <div class="section-head">
+                <h2>Find a walking partner</h2>
+                <p>Search for people who are available for a walk near you.</p>
+            </div>
+
+            <form class="search-box" id="searchForm" role="search" novalidate>
+                <div class="field">
+                    <label for="location"><svg class="i"><use href="#i-pin"/></svg> Location</label>
+                    <input type="text" id="location" placeholder="Search your locality..." autocomplete="off">
+                </div>
+                <div class="field">
+                    <label for="gender"><svg class="i"><use href="#i-user"/></svg> Partner preference</label>
+                    <select id="gender">
+                        <option value="all">Any gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="walkTime"><svg class="i"><use href="#i-clock"/></svg> Preferred time</label>
+                    <select id="walkTime">
+                        <option value="all">Any time</option>
+                        <option value="morning">Morning</option>
+                        <option value="evening">Evening</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" id="searchButton" type="submit"><svg class="i"><use href="#i-search"/></svg> Search</button>
+                <button class="btn btn-outline" id="clearButton" type="button">Clear</button>
+            </form>
+
+            <div class="filter-row">
+                <div class="popular" id="popular" aria-label="Popular localities">
+                    <span>Popular:</span>
+                </div>
+                <label class="switch" for="savedOnly">
+                    <input type="checkbox" id="savedOnly">
+                    <span class="switch-ui" aria-hidden="true"></span>
+                    Saved partners only
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="results-section" aria-labelledby="resultsTitle">
+        <div class="container">
+            <div class="results-head">
+                <div>
+                    <h2 id="resultsTitle">Available walking partners</h2>
+                    <p id="resultCount" role="status" aria-live="polite">Loading partners...</p>
+                </div>
+                <button class="btn btn-outline" type="button" id="listBtn"><svg class="i"><use href="#i-plus"/></svg> List yourself</button>
+            </div>
+            <div class="partner-grid" id="partnerContainer" aria-busy="true"></div>
+            <div class="empty-state" id="emptyMessage" hidden>
+                <svg class="i"><use href="#i-search"/></svg>
+                <h3>No walking partners found</h3>
+                <p id="emptyText">Try a different locality or loosen your filters.</p>
+            </div>
+            <div class="load-more"><button class="btn btn-outline" id="loadMore" type="button" hidden>Load more</button></div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section" id="about">
+        <div class="container">
+            <div class="section-head">
+                <h2>How WalkSync works</h2>
+                <p>Finding a walking partner is simple.</p>
+            </div>
+            <ol class="steps">
+                <li class="step">
+                    <span class="step-icon"><svg class="i"><use href="#i-pin"/></svg></span>
+                    <h3>Choose your area</h3>
+                    <p>Enter your locality and the time of day you like to walk.</p>
+                </li>
+                <li class="step">
+                    <span class="step-icon"><svg class="i"><use href="#i-user"/></svg></span>
+                    <h3>Pick your preference</h3>
+                    <p>Filter by partner preference and browse short, friendly profiles.</p>
+                </li>
+                <li class="step">
+                    <span class="step-icon"><svg class="i"><use href="#i-users"/></svg></span>
+                    <h3>Connect &amp; walk</h3>
+                    <p>Send a request. Once they accept, you can share contact details and meet.</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SAFETY -->
+    <section class="safety" id="safety">
+        <div class="container">
+            <div class="section-head">
+                <h2>Your safety matters</h2>
+                <p>WalkSync helps people connect for walking. A few habits keep every first meeting comfortable.</p>
+            </div>
+            <div class="tips">
+                <article class="tip"><svg class="i"><use href="#i-pin"/></svg><h3>Meet in public</h3><p>Choose a busy, well-lit spot such as a park entrance or market for the first walk.</p></article>
+                <article class="tip"><svg class="i"><use href="#i-users"/></svg><h3>Tell someone</h3><p>Share your plan, route and partner's name with a friend or family member.</p></article>
+                <article class="tip"><svg class="i"><use href="#i-lock"/></svg><h3>Protect your details</h3><p>Contact details are shared only after a request is accepted. Share more only when you're ready.</p></article>
+                <article class="tip"><svg class="i"><use href="#i-shield"/></svg><h3>Trust your instincts</h3><p>If something feels off, leave. You can decline or cancel any request at any time.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="container narrow">
+            <div class="section-head">
+                <h2>Frequently asked questions</h2>
+            </div>
+            <details class="faq"><summary>Is WalkSync free?</summary><p>Yes. Creating an account, listing yourself and sending walk requests are free.</p></details>
+            <details class="faq"><summary>How do I become a walking partner?</summary><p>Create an account, choose "List yourself", and add your locality, preferred time, pace and a short bio. You can pause or remove your listing whenever you like.</p></details>
+            <details class="faq"><summary>When are my contact details shared?</summary><p>Only after you accept a request (or someone accepts yours). Until then, other members only see your first name, locality and walking preferences.</p></details>
+            <details class="faq"><summary>Can I cancel or decline a request?</summary><p>Absolutely. Pending requests you sent can be cancelled, and requests you receive can be accepted or declined from the "My walks" panel.</p></details>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+        <div class="container contact-grid">
+            <div>
+                <h2>Get in touch</h2>
+                <p class="muted">Questions, feedback or partnership ideas? Send us a note and we'll get back to you.</p>
+                <ul class="contact-list">
+                    <li><svg class="i"><use href="#i-mail"/></svg> <a href="mailto:hello@walksync.com">hello@walksync.com</a></li>
+                    <li><svg class="i"><use href="#i-phone"/></svg> <a href="tel:+918104917140">+91 81049 17140</a></li>
+                </ul>
+            </div>
+            <form class="card-form" id="contactForm" novalidate>
+                <div class="field"><label for="cName">Your name</label><input id="cName" name="name" type="text" autocomplete="name" required maxlength="60"></div>
+                <div class="field"><label for="cEmail">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" required maxlength="120"></div>
+                <div class="field"><label for="cMessage">Message</label><textarea id="cMessage" name="message" rows="4" required maxlength="1000"></textarea></div>
+                <p class="form-error" id="contactError" role="alert" hidden></p>
+                <button class="btn btn-primary" type="submit">Send message</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div>
+            <div class="footer-brand">
+                <span class="logo-mark footer-logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" focusable="false">
+                        <path class="logo-route" d="M13 35c-5-7 1-12 8-11s13 2 14-6" />
+                        <circle class="logo-dot" cx="13" cy="35" r="3" />
+                        <path class="logo-pin" d="M35 7c-5 0-8 3.7-8 8 0 5.4 8 13 8 13s8-7.6 8-13c0-4.3-3-8-8-8z" />
+                        <circle class="logo-pin-hole" cx="35" cy="15" r="2.5" />
+                    </svg>
+                </span>
+                <span class="logo-word"><span class="logo-walk">Walk</span><span class="logo-sync">Sync</span></span>
+            </div>
+            <p>Walk together. Stay healthy. Make connections.</p>
+        </div>
+        <nav aria-label="Footer">
+            <h3>Quick links</h3>
+            <a href="#home">Home</a>
+            <a href="#find">Find partner</a>
+            <a href="#about">How it works</a>
+            <a href="#safety">Safety</a>
+        </nav>
+        <div>
+            <h3>Contact</h3>
+            <a href="mailto:hello@walksync.com">hello@walksync.com</a>
+            <a href="tel:+918104917140">+91 81049 17140</a>
+        </div>
+    </div>
+    <div class="container copyright">&copy; 2026 WalkSync. All rights reserved.</div>
+</footer>
+
+<!-- DIALOGS -->
+<dialog class="dialog" id="authDialog" aria-labelledby="authTitle">
+    <div class="dialog-body">
+        <button class="dialog-close" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+        <h2 id="authTitle">Welcome back</h2>
+        <p class="muted" id="authNote">Log in to save partners and send walk requests.</p>
+        <div class="tabs" role="tablist">
+            <button type="button" role="tab" id="tabLogin" aria-selected="true">Log in</button>
+            <button type="button" role="tab" id="tabRegister" aria-selected="false">Create account</button>
+        </div>
+        <form id="authForm" novalidate>
+            <div class="field reg-only" hidden><label for="aName">Full name</label><input id="aName" type="text" autocomplete="name" maxlength="50"></div>
+            <div class="field reg-only" hidden>
+                <label for="aGender">Gender</label>
+                <select id="aGender"><option value="">Select...</option><option value="female">Female</option><option value="male">Male</option><option value="other">Other</option></select>
+            </div>
+            <div class="field"><label for="aEmail">Email</label><input id="aEmail" type="email" autocomplete="email" required maxlength="120"></div>
+            <div class="field"><label for="aPassword">Password</label><input id="aPassword" type="password" autocomplete="current-password" required maxlength="72"><small class="hint reg-only" hidden>At least 8 characters with a letter and a number.</small></div>
+            <p class="form-error" id="authError" role="alert" hidden></p>
+            <button class="btn btn-primary btn-block" type="submit" id="authSubmit">Log in</button>
+        </form>
+    </div>
+</dialog>
+
+<dialog class="dialog" id="requestDialog" aria-labelledby="requestTitle">
+    <div class="dialog-body">
+        <button class="dialog-close" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+        <h2 id="requestTitle">Request a walk</h2>
+        <p class="muted" id="requestSub"></p>
+        <form id="requestForm" novalidate>
+            <div class="field"><label for="rWhen">Suggested time <span class="opt">(optional)</span></label><input id="rWhen" type="text" maxlength="60" placeholder="e.g. Tomorrow, 6:30 AM"></div>
+            <div class="field"><label for="rMessage">Message</label><textarea id="rMessage" rows="4" maxlength="300" required placeholder="Say hello and share where you usually walk."></textarea></div>
+            <p class="form-error" id="requestError" role="alert" hidden></p>
+            <button class="btn btn-primary btn-block" type="submit">Send request</button>
+        </form>
+    </div>
+</dialog>
+
+<dialog class="dialog" id="profileDialog" aria-labelledby="profileTitle">
+    <div class="dialog-body">
+        <button class="dialog-close" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+        <h2 id="profileTitle">Your walking profile</h2>
+        <p class="muted">Other members will see your first name, locality and the details below.</p>
+        <form id="profileForm" novalidate>
+            <div class="field"><label for="pLocation">Locality</label><input id="pLocation" type="text" maxlength="60" required placeholder="e.g. Rajpur Road"></div>
+            <div class="row-2">
+                <div class="field"><label for="pTime">Preferred time</label><select id="pTime"><option value="morning">Morning</option><option value="evening">Evening</option></select></div>
+                <div class="field"><label for="pPace">Pace</label><select id="pPace"><option value="relaxed">Relaxed</option><option value="steady" selected>Steady</option><option value="brisk">Brisk</option></select></div>
+            </div>
+            <div class="field"><label for="pDistance">Usual distance (km)</label><input id="pDistance" type="number" min="1" max="50" step="0.5" value="4" required></div>
+            <div class="field"><label for="pBio">Short bio</label><textarea id="pBio" rows="3" maxlength="240" required placeholder="What do you enjoy about walking?"></textarea></div>
+            <label class="check"><input type="checkbox" id="pAvailable" checked> Show me in search results (available for walks)</label>
+            <p class="form-error" id="profileError" role="alert" hidden></p>
+            <div class="dialog-actions">
+                <button class="btn btn-danger-ghost" type="button" id="removeProfile" hidden>Remove listing</button>
+                <button class="btn btn-primary" type="submit">Save profile</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<dialog class="dialog dialog-wide" id="walksDialog" aria-labelledby="walksTitle">
+    <div class="dialog-body">
+        <button class="dialog-close" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+        <h2 id="walksTitle">My walks</h2>
+        <div class="tabs" role="tablist">
+            <button type="button" role="tab" id="tabIncoming" aria-selected="true">Received <span class="count" id="incomingCount" hidden></span></button>
+            <button type="button" role="tab" id="tabOutgoing" aria-selected="false">Sent</button>
+        </div>
+        <div id="walksList" class="walks-list"></div>
+        <hr>
+        <div class="walks-profile">
+            <p class="muted" id="profileStatus"></p>
+            <button class="btn btn-outline" type="button" id="editProfileBtn">Edit walking profile</button>
+        </div>
+    </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/script.js"></script>
+</body>
+</html>
